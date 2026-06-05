@@ -1,1 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio NSI</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #f5f3ee;
+      --surface: #ffffff;
+      --ink: #1a1814;
+      --muted: #6b6760;
+      --border: #e2dfd8;
+      --accent: #2d5a27;
+      --accent-light: #eaf3e8;
+      --blue: #1b3f6e;
+      --blue-light: #e8eef6;
+      --tag-bg: #f0ede8;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    header {
+      padding: 3.5rem 2rem 2.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: .75rem;
+    }
+
+    header h1 strong {
+      font-weight: 600;
+    }
+
+    header p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      transition: box-shadow .25s, transform .25s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,.07);
+      transform: translateY(-2px);
+    }
+
+    .card-visual {
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .card-visual.art { background: var(--blue-light); }
+    .card-visual.vet { background: var(--accent-light); }
+
+    .card-visual svg { width: 120px; height: 120px; }
+
+    .card-body {
+      padding: 2rem;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    .card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .08em;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: var(--tag-bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .tag.py { background: var(--blue-light); color: var(--blue); border-color: #c5d3e8; }
+    .tag.tr { background: var(--accent-light); color: var(--accent); border-color: #c0d9bd; }
+    .tag.tk { background: #fdf3e3; color: #7a4f10; border-color: #f0d9a8; }
+
+    .btns {
+      display: flex;
+      gap: 8px;
+      margin-top: .25rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: background .18s, border-color .18s, transform .15s;
+    }
+
+    .btn:active { transform: scale(.97); }
+
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .btn-primary:hover { background: #2e2b26; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+    }
+    .btn-secondary:hover { background: var(--tag-bg); }
+
+    .btn svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .team-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+    }
+
+    .team-section h2 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .team-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: .75rem;
+    }
+
+    .team-row:last-child { margin-bottom: 0; }
+
+    .team-label {
+      font-size: 12px;
+      color: var(--muted);
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .avatars {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .av-a { background: #ddd6fe; color: #4c1d95; }
+    .av-b { background: #bfdbfe; color: #1e3a5f; }
+    .av-c { background: #bbf7d0; color: #14532d; }
+    .av-d { background: #fecdd3; color: #881337; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      border-top: 1px solid var(--border);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 620px) {
+      .card { grid-template-columns: 1fr; }
+      .card-visual { min-height: 160px; }
+      .card-body { border-left: none; border-top: 1px solid var(--border); }
+      .team-row { flex-direction: column; align-items: flex-start; gap: .4rem; }
+      .team-label { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="header-label">NSI · Première · 2024–2025</p>
+  <h1>Mes projets<br><strong>Python</strong></h1>
+  <p>Deux projets réalisés au cours de l'année en classe de première NSI, codés avec Python sur Pyzo.</p>
+</header>
+
+<main>
+
+  <!-- PROJET 1 -->
+  <div class="card">
+    <div class="card-visual art">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="45" height="45" rx="3" fill="#378ADD" opacity=".9"/>
+        <rect x="65" y="10" width="45" height="45" rx="3" fill="#D4537E" opacity=".9"/>
+        <rect x="10" y="65" width="45" height="45" rx="3" fill="#1D9E75" opacity=".9"/>
+        <rect x="65" y="65" width="45" height="45" rx="3" fill="#EF9F27" opacity=".9"/>
+        <circle cx="32" cy="32" r="12" fill="white" opacity=".6"/>
+        <polygon points="87,14 97,38 77,38" fill="white" opacity=".6"/>
+        <rect x="25" y="72" width="10" height="10" fill="white" opacity=".5" transform="rotate(45 30 77)"/>
+        <circle cx="87" cy="87" r="10" fill="white" opacity=".5"/>
+        <rect x="17" y="74" width="31" height="5" rx="2" fill="white" opacity=".4"/>
+        <rect x="17" y="83" width="20" height="5" rx="2" fill="white" opacity=".4"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <span class="card-num">Projet 01</span>
+      <h2 class="card-title">NFT Art</h2>
+      <p class="card-desc">Œuvre graphique générée avec Turtle Python : 16 figures géométriques colorées (cercles, triangles, arcs, diagonales, losanges…) organisées en grille 4×4. Chaque membre de l'équipe a conçu ses propres figures.</p>
+      <div class="tags">
+        <span class="tag py">Python</span>
+        <span class="tag tr">Turtle</span>
+        <span class="tag">Graphisme</span>
+        <span class="tag">Géométrie</span>
+      </div>
+      <div class="btns">
+        <a class="btn btn-primary" href="https://trinket.io/python/050ec2d4b350" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+          Lancer le projet
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/rlssboostingpayment-max/rlssboostingpayment.github.io" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Code source
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJET 2 -->
+  <div class="card">
+    <div class="card-visual vet">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="25" y="15" width="65" height="80" rx="6" fill="#5DCAA5" opacity=".8"/>
+        <rect x="35" y="30" width="45" height="6" rx="3" fill="#085041"/>
+        <rect x="35" y="42" width="45" height="6" rx="3" fill="#085041"/>
+        <rect x="35" y="54" width="30" height="6" rx="3" fill="#085041"/>
+        <rect x="35" y="66" width="20" height="6" rx="3" fill="#085041" opacity=".5"/>
+        <circle cx="80" cy="82" r="18" fill="#1D9E75"/>
+        <rect x="76" y="74" width="8" height="16" rx="3" fill="white"/>
+        <rect x="72" y="78" width="16" height="8" rx="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <span class="card-num">Projet 02</span>
+      <h2 class="card-title">Carnet de santé vétérinaire</h2>
+      <p class="card-desc">Application avec interface graphique pour gérer les animaux de compagnie : ajout, suppression, suivi du poids, alertes vaccins, tri alphabétique, filtres par espèce et comparaison de moyennes entre espèces.</p>
+      <div class="tags">
+        <span class="tag py">Python</span>
+        <span class="tag tk">tkinter</span>
+        <span class="tag">nsi_ui</span>
+        <span class="tag">Application</span>
+      </div>
+      <div class="btns">
+        <a class="btn btn-primary" href="https://github.com/rlssboostingpayment-max/rlssboostingpayment.github.io" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Voir le code
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉQUIPES -->
+  <div class="team-section">
+    <h2>Équipes</h2>
+    <div class="team-row">
+      <span class="team-label">NFT Art</span>
+      <div class="avatars">
+        <div class="avatar av-a" title="Manel Gordo">MG</div>
+        <div class="avatar av-b" title="Paul Julliard">PJ</div>
+        <div class="avatar av-c" title="Santiago Gomez-Roca">SG</div>
+        <div class="avatar av-d" title="Jacques Giraud-Patino">JG</div>
+      </div>
+    </div>
+    <div class="team-row">
+      <span class="team-label">Carnet vétérinaire</span>
+      <div class="avatars">
+        <div class="avatar av-b" title="Paul Julliard">PJ</div>
+        <div class="avatar av-c" title="Yanis Francillon">YF</div>
+        <div class="avatar av-a" title="Manel Gordo">MG</div>
+        <div class="avatar av-d" title="Mathias Pignard">MP</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  NSI · Première · 2024–2025
+</footer>
+
+</body>
+</html>
